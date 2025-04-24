@@ -1,0 +1,40 @@
+<!-- ======= Portfolio Section ======= -->
+<section id="portfolio" class="portfolio section-bg">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Portfolio</h2>
+        <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+      </div>
+
+      <div class="row" data-aos="fade-up">
+        <div class="col-lg-12 d-flex justify-content-center">
+          <ul id="portfolio-flters">
+            <li data-filter="*" class="filter-active">All</li>
+            {% for category in all_portfoliocategories %}
+              <li data-filter=".filter-{{ category.name|lower }}">{{ category.name }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100">
+        {% for item in all_portfolioitems %}
+          <div class="col-lg-4 col-md-6 portfolio-item filter-{{ item.category.name|lower }}">
+            <div class="portfolio-wrap">
+              {% for image in item.images.all %}
+                <img src="{{ MEDIA_URL }}{{ image.image }}" class="img-fluid" alt="{{ item.title }}">
+              {% endfor %}
+              <div class="portfolio-links">
+                {% for image in item.images.all %}
+                  <a href="{{ MEDIA_URL }}{{ image.image }}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="{{ item.title }}"><i class="bx bx-plus"></i></a>
+                {% endfor %}
+                <a href="{{ item.project_url }}" title="More Details"><i class="bx bx-link"></i></a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+    </div>
+</section><!-- End Portfolio Section -->

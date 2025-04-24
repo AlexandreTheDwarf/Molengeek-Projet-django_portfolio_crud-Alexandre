@@ -83,6 +83,14 @@ class ServiceCard(models.Model):
     title = models.CharField(max_length=64)
     description = models.TextField()
 
+    # Ajout du champ section pour faire la relation avec ServiceSection
+    section = models.ForeignKey(
+    ServiceSection, 
+    related_name='service_cards', 
+    on_delete=models.CASCADE, 
+    default=1  # ici 1 correspond à l'ID d'une `ServiceSection` existante
+)
+
 # Services end
 
 # Testimonials debut
@@ -91,10 +99,11 @@ class TestimonialSection(models.Model):
     under_title = models.TextField()  # Texte sous le titre de la section
 
 class Testimonial(models.Model):
-    quote = models.TextField()  # Le texte du témoignage
-    image = models.ImageField(upload_to='testimonials/')  # L'image de la personne
-    name = models.CharField(max_length=100)  # Le nom de la personne
-    title = models.CharField(max_length=100)  # Le titre ou la position de la personne
+    quote = models.TextField()
+    image = models.ImageField(upload_to='testimonials/')
+    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
+    section = models.ForeignKey(TestimonialSection, related_name='testimonials', on_delete=models.CASCADE, default=1)  # Utilise un ID de section par défaut ici
 
 # Testimonials end 
 
@@ -105,6 +114,6 @@ class Contact(models.Model):
     location = models.CharField(max_length=64)
     email = models.EmailField()
     phone = models.CharField(max_length=32)
-    iframe_url = models.URLField(blank=True, null=True)  # L'URL de l'iframe Google Maps
+    iframe_url = models.TextField(default='')  # L'URL de l'iframe Google Maps
 
 # Contact end

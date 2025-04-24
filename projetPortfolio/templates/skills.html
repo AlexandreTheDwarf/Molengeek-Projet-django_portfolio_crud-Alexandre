@@ -1,0 +1,24 @@
+<!-- ======= Skills Section ======= -->
+<section id="skills" class="skills section-bg">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Skills</h2>
+        <p>{{ all_skillsection.under_title }}</p>
+      </div>
+
+      <div class="row skills-content">
+        {% for skill in all_skills %}
+          <div class="col-lg-6" data-aos="fade-up" {% if forloop.counter0 > 2 %}data-aos-delay="100"{% endif %}>
+            <div class="progress">
+              <span class="skill">{{ skill.name }} <i class="val">{{ skill.percentage }}%</i></span>
+              <div class="progress-bar-wrap">
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{ skill.percentage }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ skill.percentage }}%"></div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+    </div>
+</section><!-- End Skills Section -->

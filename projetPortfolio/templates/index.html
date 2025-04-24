@@ -1,6 +1,19 @@
-{% load static %}
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
     <!-- include des sections ici -->
+    {% include "header.html" %}
+    {% include "hero.html" %}
+    <main id="main">
+        {% include "about.html" %}
+        {% include "facts.html" %}
+        {% include "skills.html" %}
+        {% include "resume.html" %}
+        {% include "portfolio.html" %}
+        {% include "services.html" %}
+        {% include "testimonial.html" %}
+        {% include "contact.html" %}
+    </main><!-- End #main -->
+        {% include "footer.html" %}
 {% endblock %}
