@@ -1,5 +1,7 @@
 asgiref==3.8.1
+crispy-bootstrap5==2025.4
 Django==5.2
+django-crispy-forms==2.4
 django-seed==0.3.1
 Faker==37.1.0
 mysqlclient==2.2.7

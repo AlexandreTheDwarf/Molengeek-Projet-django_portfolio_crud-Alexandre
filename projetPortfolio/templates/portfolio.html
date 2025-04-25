@@ -29,8 +29,8 @@
                 {% for image in item.images.all %}
                   <a href="{{ MEDIA_URL }}{{ image.image }}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="{{ item.title }}"><i class="bx bx-plus"></i></a>
                 {% endfor %}
-                <a href="{{ item.project_url }}" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
+                <a href="{% url 'portfolio_item_detail' item.id %}" title="More Details"><i class="bx bx-link"></i></a>
+              </div>              
             </div>
           </div>
         {% endfor %}

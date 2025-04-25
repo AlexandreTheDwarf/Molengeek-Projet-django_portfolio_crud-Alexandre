@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import HeroForm, AboutForm, SkillSectionForm, SkillForm, ServiceSectionForm, ServiceCardForm, TestimonialSectionForm, TestimonialForm, PortfolioCategoryForm, PortfolioImageFormSet, PortfolioItemForm
+from django.conf import settings
+from .forms import HeroForm, AboutForm, SkillSectionForm, SkillForm, ServiceSectionForm, ServiceCardForm, TestimonialSectionForm, TestimonialForm, PortfolioCategoryForm, PortfolioItemForm
 from portfolio_front.models import Hero, About, Skill, SkillSection, ServiceSection, ServiceCard, TestimonialSection, Testimonial, PortfolioItem, PortfolioCategory, PortfolioImage
 
 def go_to_admin(request):
@@ -172,6 +173,12 @@ def get_portfolio(request):
     all_items = PortfolioItem.objects.all()
     return render(request, "adminSide/datasheet/portfolios_sheet.html", {'all_categories': all_categories, 'all_items': all_items})
 
+def portfolio_item_detail(request, item_id):
+    item = get_object_or_404(PortfolioItem, id=item_id)
+    all_about = About.objects.first()
+    return render(request, 'portfolio_details.html', {'item': item, 'all_about' : all_about, 'MEDIA_URL': settings.MEDIA_URL,})
+
+
 def create_portfolio_category(request):
     if request.method == 'POST':
         form = PortfolioCategoryForm(request.POST)
@@ -180,7 +187,7 @@ def create_portfolio_category(request):
             return redirect('get_portfolio')
     else:
         form = PortfolioCategoryForm()
-    return render(request, 'adminSide/create_portfolio.html', {'form': form})
+    return render(request, 'adminSide/create.html', {'form': form})
 
 def update_portfolio_category(request, category_id):
     category = get_object_or_404(PortfolioCategory, id=category_id)
@@ -191,7 +198,7 @@ def update_portfolio_category(request, category_id):
             return redirect('get_portfolio')
     else:
         form = PortfolioCategoryForm(instance=category)
-    return render(request, 'adminSide/update_portfolio.html', {'form': form})
+    return render(request, 'adminSide/update.html', {'form': form})
 
 def delete_portfolio_category(request, category_id):
     category = get_object_or_404(PortfolioCategory, id=category_id)
@@ -203,33 +210,33 @@ def delete_portfolio_category(request, category_id):
 def create_portfolio_item(request):
     if request.method == 'POST':
         form = PortfolioItemForm(request.POST, request.FILES)
-        images_form = PortfolioImageFormSet(request.POST, request.FILES)
-        if form.is_valid() and images_form.is_valid():
+        if form.is_valid():
             item = form.save()
-            for image_form in images_form:
-                if image_form.cleaned_data:
-                    image = image_form.save(commit=False)
-                    image.item = item
-                    image.save()
+            if 'image' in request.FILES:
+                image = request.FILES['image']
+                PortfolioImage.objects.create(item=item, image=image)
             return redirect('get_portfolio')
     else:
         form = PortfolioItemForm()
-        images_form = PortfolioImageFormSet(queryset=PortfolioImage.objects.none())
-    return render(request, 'adminSide/create_portfolio.html', {'form': form, 'images_form': images_form})
+    return render(request, 'adminSide/create.html', {'form': form})
 
 def update_portfolio_item(request, item_id):
     item = get_object_or_404(PortfolioItem, id=item_id)
     if request.method == 'POST':
         form = PortfolioItemForm(request.POST, request.FILES, instance=item)
-        images_form = PortfolioImageFormSet(request.POST, request.FILES, instance=item)
-        if form.is_valid() and images_form.is_valid():
-            form.save()
-            images_form.save()
+        if form.is_valid():
+            item = form.save()
+            if 'image' in request.FILES:
+                image = request.FILES['image']
+                if item.images.exists():
+                    item.images.first().image = image
+                    item.images.first().save()
+                else:
+                    PortfolioImage.objects.create(item=item, image=image)
             return redirect('get_portfolio')
     else:
         form = PortfolioItemForm(instance=item)
-        images_form = PortfolioImageFormSet(instance=item)
-    return render(request, 'adminSide/update_portfolio.html', {'form': form, 'images_form': images_form})
+    return render(request, 'adminSide/update.html', {'form': form})
 
 def delete_portfolio_item(request, item_id):
     item = get_object_or_404(PortfolioItem, id=item_id)

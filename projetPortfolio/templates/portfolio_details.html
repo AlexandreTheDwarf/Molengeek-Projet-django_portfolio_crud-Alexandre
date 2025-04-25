@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% include "header.html" %}
+        <main id="main">
+            <section id="portfolio-details" class="portfolio-details mt-5">
+            <div class="container">
+                <div class="row gy-4">
+
+                <div class="col-lg-8">
+                    <div class="portfolio-details-slider swiper">
+                    <div class="swiper-wrapper align-items-center">
+                        {% for image in item.images.all %}
+                        <div class="swiper-slide">
+                            <img src="{{ image.image.url }}" alt="{{ item.title }}" class="img-fluid">
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="portfolio-info">
+                    <h3>Informations du projet</h3>
+                    <ul>
+                        <li><strong>Catégorie</strong>: {{ item.category.name }}</li>
+                        <li><strong>Client</strong>: {{ item.client }}</li>
+                        <li><strong>Date</strong>: {{ item.project_date }}</li>
+                        <li><strong>URL</strong>: <a href="{{ item.project_url }}" target="_blank">{{ item.project_url }}</a></li>
+                    </ul>
+                    </div>
+                    <div class="portfolio-description">
+                    <h2>{{ item.title }}</h2>
+                    <p>{{ item.description }}</p>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+            </section>
+        </main><!-- End #main -->
+        {% include "footer.html" %}
+{% endblock %}

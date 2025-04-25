@@ -1,6 +1,5 @@
 from django import forms
 from portfolio_front.models import Hero, About, SkillSection, Skill, PortfolioCategory, PortfolioItem, PortfolioImage, ServiceSection, ServiceCard, TestimonialSection, Testimonial
-from django.forms import inlineformset_factory
 
 class HeroForm(forms.ModelForm):
     class Meta:
@@ -28,16 +27,21 @@ class PortfolioCategoryForm(forms.ModelForm):
         fields = '__all__'
 
 class PortfolioItemForm(forms.ModelForm):
+    image = forms.ImageField(required=False)  # Champ hors modèle
+
     class Meta:
         model = PortfolioItem
-        fields = ['category', 'title', 'client', 'project_date', 'project_url', 'description']
+        fields = ['category', 'title', 'client', 'project_date', 'project_url', 'description']  
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.pk:
+            self.fields['image'].required = False
 
 class PortfolioImageForm(forms.ModelForm):
     class Meta:
         model = PortfolioImage
         fields = ['image']
-
-PortfolioImageFormSet = inlineformset_factory(PortfolioItem, PortfolioImage, form=PortfolioImageForm, extra=1, can_delete=True)
 
 class ServiceSectionForm(forms.ModelForm):
     class Meta:

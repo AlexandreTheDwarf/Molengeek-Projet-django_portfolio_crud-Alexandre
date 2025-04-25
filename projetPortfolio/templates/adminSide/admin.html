@@ -1,20 +1,51 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container mx-auto px-4 py-6">
   {% include "adminSide/navbar.html" %}
 
-  <a href="{% url 'update_hero' %}">Modifier la section hero</a>
-  <br>
-  <a href="{% url 'update_about' %}">Modifier la section about</a>
-  <br>
-  <a href="{% url 'get_skills' %}">Modifier la section skills</a>
-  <br>
-  <a href="{% url 'get_services' %}">Modifier la section services</a>
-  <br>
-  <a href="{% url 'get_testimonials' %}">Modifier la section testimonials</a>
-  <br>
-  <a href="{% url 'get_portfolio' %}">Modifier la section portfolio</a>
-  <br>
+  <div class="row">
+    <div class="col-md-6">
+      <a href="{% url 'update_hero' %}">
+        <img src="{% static 'assets/screenshots/hero.png' %}" alt="Modifier la section hero" class="img-fluid custom-img-size">
+      </a>
+    </div>
+
+    <div class="col-md-6">
+      <a href="{% url 'update_about' %}">
+        <img src="{% static 'assets/screenshots/about.png' %}" alt="Modifier la section about" class="img-fluid custom-img-size">
+      </a>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <a href="{% url 'get_skills' %}">
+        <img src="{% static 'assets/screenshots/skills.png' %}" alt="Modifier la section skills" class="img-fluid custom-img-size">
+      </a>
+    </div>
+
+    <div class="col-md-6">
+      <a href="{% url 'get_services' %}">
+        <img src="{% static 'assets/screenshots/services.png' %}" alt="Modifier la section services" class="img-fluid custom-img-size">
+      </a>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <a href="{% url 'get_testimonials' %}">
+        <img src="{% static 'assets/screenshots/testimonials.png' %}" alt="Modifier la section testimonials" class="img-fluid custom-img-size">
+      </a>
+    </div>
+
+    <div class="col-md-6">
+      <a href="{% url 'get_portfolio' %}">
+        <img src="{% static 'assets/screenshots/portfolio.png' %}" alt="Modifier la section portfolio" class="img-fluid custom-img-size">
+      </a>
+    </div>
+  </div>
+
 </div>
 {% endblock %}

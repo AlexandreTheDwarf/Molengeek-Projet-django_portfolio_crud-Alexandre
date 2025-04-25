@@ -47,6 +47,7 @@ urlpatterns = [
     path('delete-testimonial/<int:testimonial_id>/', back_views.delete_testimonial, name='delete_testimonial'),
   # Portfolio :
     path('adminPanel/portfolio/', back_views.get_portfolio, name='get_portfolio'),
+    path('portfolio/<int:item_id>/', back_views.portfolio_item_detail, name='portfolio_item_detail'),
     path('create-portfolio-category/', back_views.create_portfolio_category, name='create_portfolio_category'),
     path('update-portfolio-category/<int:category_id>/', back_views.update_portfolio_category, name='update_portfolio_category'),
     path('delete-portfolio-category/<int:category_id>/', back_views.delete_portfolio_category, name='delete_portfolio_category'),
