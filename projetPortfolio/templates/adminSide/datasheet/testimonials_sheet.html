@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% include "adminSide/navbar.html" %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Gérer les témoignages</h1>
+
+        <!-- Affichage et modification du texte de TestimonialSection -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">Texte sous le titre de la section</h2>
+                <p class="card-text">{{ all_testimonialsection.under_title }}</p>
+                <a href="{% url 'update_testimonialsection' all_testimonialsection.id %}" class="btn btn-primary">Modifier</a>
+            </div>
+        </div>
+
+        <!-- Tableau des Témoignages -->
+        <h2 class="mb-3">Liste des témoignages</h2>
+        <div class="mb-3">
+            <a href="{% url 'create_testimonial' %}" class="btn btn-success">Ajouter un témoignage</a>
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Citation</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Titre</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for testimonial in all_testimonials %}
+                <tr>
+                    <td>{{ testimonial.quote }}</td>
+                    <td><img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}" style="width: 50px; height: 50px;"></td>
+                    <td>{{ testimonial.name }}</td>
+                    <td>{{ testimonial.title }}</td>
+                    <td>
+                        <a href="{% url 'update_testimonial' testimonial.id %}" class="btn btn-warning btn-sm">Mettre à jour</a>
+                        <a href="{% url 'delete_testimonial' testimonial.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}

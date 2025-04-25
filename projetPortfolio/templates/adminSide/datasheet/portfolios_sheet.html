@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% include "adminSide/navbar.html" %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Gérer le portfolio</h1>
+
+        <!-- Tableau des Catégories -->
+        <h2 class="mb-3">Liste des catégories</h2>
+        <div class="mb-3">
+            <a href="{% url 'create_portfolio_category' %}" class="btn btn-success">Ajouter une catégorie</a>
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in all_categories %}
+                <tr>
+                    <td>{{ category.name }}</td>
+                    <td>
+                        <a href="{% url 'update_portfolio_category' category.id %}" class="btn btn-warning btn-sm">Mettre à jour</a>
+                        <a href="{% url 'delete_portfolio_category' category.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Tableau des Projets -->
+        <h2 class="mb-3">Liste des projets</h2>
+        <div class="mb-3">
+            <a href="{% url 'create_portfolio_item' %}" class="btn btn-success">Ajouter un projet</a>
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Titre</th>
+                    <th scope="col">Client</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">URL</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Images</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in all_items %}
+                <tr>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.client }}</td>
+                    <td>{{ item.project_date }}</td>
+                    <td><a href="{{ item.project_url }}" target="_blank">{{ item.project_url }}</a></td>
+                    <td>{{ item.description }}</td>
+                    <td>
+                        {% for image in item.images.all %}
+                            <img src="{{ image.image.url }}" alt="{{ item.title }}" style="width: 50px; height: 50px; margin-right: 5px;">
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="{% url 'update_portfolio_item' item.id %}" class="btn btn-warning btn-sm">Mettre à jour</a>
+                        <a href="{% url 'delete_portfolio_item' item.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}
+

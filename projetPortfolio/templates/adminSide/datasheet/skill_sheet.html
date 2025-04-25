@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% include "adminSide/navbar.html" %}
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Gérer les compétences</h1>
+
+        <!-- Affichage et modification du texte de SkillSection -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">Texte sous le titre de la section</h2>
+                <p class="card-text">{{ all_skillsection.under_title }}</p>
+                <a href="{% url 'update_skillsection' all_skillsection.id %}" class="btn btn-primary">Modifier</a>
+            </div>
+        </div>
+
+        <!-- Tableau des Skills -->
+        <h2 class="mb-3">Liste des compétences</h2>
+        <div class="mb-3">
+            <a href="{% url 'create_skill' %}" class="btn btn-success">Ajouter une compétence</a>
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Pourcentage</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for skill in all_skills %}
+                <tr>
+                    <td>{{ skill.name }}</td>
+                    <td>{{ skill.percentage }}</td>
+                    <td>
+                        <a href="{% url 'update_skill' skill.id %}" class="btn btn-warning btn-sm">Mettre à jour</a>
+                        <a href="{% url 'delete_skill' skill.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}

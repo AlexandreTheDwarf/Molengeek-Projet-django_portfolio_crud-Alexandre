@@ -49,6 +49,9 @@ class Skill(models.Model):
 class PortfolioCategory(models.Model):
     name = models.CharField(max_length=100)  # Nom de la catégorie (ex: App, Card, Web)
 
+    def __str__(self):
+        return self.name[:50]
+
 class PortfolioItem(models.Model):
     category = models.ForeignKey(PortfolioCategory, related_name='items', on_delete=models.CASCADE)  # Lien vers la catégorie
     title = models.CharField(max_length=100)  # Titre du projet
@@ -56,6 +59,9 @@ class PortfolioItem(models.Model):
     project_date = models.DateField()  # Date du projet
     project_url = models.URLField(blank=True, null=True)  # URL du projet
     description = models.TextField()  # Description détaillée du projet
+
+    def __str__(self):
+        return self.title[:50]
 
 class PortfolioImage(models.Model):
     item = models.ForeignKey(PortfolioItem, related_name='images', on_delete=models.CASCADE)  # Lien vers le projet
@@ -67,6 +73,9 @@ class PortfolioImage(models.Model):
 
 class ServiceSection(models.Model):
     under_title = models.TextField()  # Texte sous le titre de la section
+
+    def __str__(self):
+        return self.under_title[:50]
 
 class ServiceCard(models.Model):
     ICON_CHOICES = [

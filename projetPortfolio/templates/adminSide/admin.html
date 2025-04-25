@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-6">
+  {% include "adminSide/navbar.html" %}
+
+  <a href="{% url 'update_hero' %}">Modifier la section hero</a>
+  <br>
+  <a href="{% url 'update_about' %}">Modifier la section about</a>
+  <br>
+  <a href="{% url 'get_skills' %}">Modifier la section skills</a>
+  <br>
+  <a href="{% url 'get_services' %}">Modifier la section services</a>
+  <br>
+  <a href="{% url 'get_testimonials' %}">Modifier la section testimonials</a>
+  <br>
+  <a href="{% url 'get_portfolio' %}">Modifier la section portfolio</a>
+  <br>
+</div>
+{% endblock %}
